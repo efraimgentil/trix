@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "br.com.trix.rotas.*" })
+@ComponentScan(basePackages = { "br.com.trix.controllers" })
 public class SpringWebConfig extends WebMvcConfigurerAdapter {
 	
 	@Override
