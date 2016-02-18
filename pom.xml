@@ -70,18 +70,4 @@
 		</plugins>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>central</id>
-			<url>http://mvnrepository.seduc.ce.gov.br/artifactory/libs-release</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<updatePolicy>always</updatePolicy>
-			</releases>
-		</repository>
-	</repositories>
-
-
 </project>
