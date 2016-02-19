@@ -1,27 +1,28 @@
 package br.com.trix.controllers;
 
-import br.com.trix.repositories.ParadaRepository;
+import br.com.trix.models.Route;
+import br.com.trix.repositories.RouteRepository;
+import br.com.trix.repositories.StopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by efraimgentil<efraimgentil@gmail.com> on 18/02/16.
  */
 @RestController
 @RequestMapping("/rotas")
-public class RotasController {
+public class RoutesController {
 
   @Autowired
-  protected ParadaRepository paradaRepository;
+  protected RouteRepository routeRepository;
 
   @RequestMapping(value = "/" , method = RequestMethod.GET)
-  public String rotas(){
-    System.out.println( paradaRepository );
-    System.out.println( paradaRepository.findAll() );
-
-    return "LOLEE";
+  public List<Route> rotas(){
+    return routeRepository.findAll();
   }
 
 }

@@ -5,15 +5,15 @@ import java.io.Serializable;
 /**
  * Created by efraimgentil<efraimgentil@gmail.com> on 18/02/16.
  */
-public class Posicao implements Serializable{
+public class Position implements Serializable{
 
   private double lat;
   private double lng;
 
-  public Posicao() {
+  public Position() {
   }
 
-  public Posicao(double lat, double lng) {
+  public Position(double lat, double lng) {
     super();
     this.lat = lat;
     this.lng = lng;
@@ -44,7 +44,7 @@ public class Posicao implements Serializable{
       return false;
     if (getClass() != obj.getClass())
       return false;
-    Posicao other = (Posicao) obj;
+    Position other = (Position) obj;
     if (Double.doubleToLongBits(lat) != Double.doubleToLongBits(other.lat))
       return false;
     if (Double.doubleToLongBits(lng) != Double.doubleToLongBits(other.lng))
