@@ -61,7 +61,7 @@ public class StopRepositoryIT {
   public void doesReturnTheNearestPoint(){
     Integer vehicleId = 2;
 
-    List<Stop> byVehicleIdNear = stopRepository.findByVehicleIdAndPointNear( vehicleId , new Point(49.0, 50.0), new Distance(10.0));
+    List<Stop> byVehicleIdNear = stopRepository.findByVehicleIdAndPositionNear( vehicleId , new Point(49.0, 50.0), new Distance(10.0));
 
     assertFalse( byVehicleIdNear.isEmpty() );
     for( Stop s : byVehicleIdNear ) {

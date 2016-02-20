@@ -2,6 +2,9 @@ package br.com.trix.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.geo.Point;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
@@ -16,6 +19,8 @@ public class Stop implements Serializable {
   private String id;
   private String nome;
   private Integer vehicleId;
+
+  @GeoSpatialIndexed(name = "position_2dsphere" , type = GeoSpatialIndexType.GEO_2DSPHERE)
   private Position position;
 
   public Stop() {
@@ -30,9 +35,6 @@ public class Stop implements Serializable {
     return new Point( position.getLat() , position.getLng() );
   }
 
-  public void setPosition(Position position) {
-    this.position = position;
-  }
 
   @Override
   public String toString() {
@@ -71,6 +73,9 @@ public class Stop implements Serializable {
   }
   public Position getPosition() {
     return position;
+  }
+  public void setPosition(Position position) {
+    this.position = position;
   }
   public Integer getVehicleId() {
     return vehicleId;

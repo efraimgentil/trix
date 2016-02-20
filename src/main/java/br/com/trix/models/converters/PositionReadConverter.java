@@ -1,6 +1,7 @@
 package br.com.trix.models.converters;
 
 import br.com.trix.models.Position;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.springframework.core.convert.converter.Converter;
@@ -17,8 +18,10 @@ public class PositionReadConverter implements Converter<DBObject, Position> {
   @Override
   public Position convert(DBObject dbObject) {
     if(dbObject != null){
-      Double[] d = (Double[]) dbObject.get("cordinates");
-      return new Position(d[0] , d[1]);
+      BasicDBList list = (BasicDBList) dbObject.get("coordinates");
+      Double lat =  new Double(String.valueOf(list.get(0)) );
+      Double lng =  new Double(String.valueOf(list.get(1)) );
+      return new Position( lat, lng);
     }
     return null;
   }

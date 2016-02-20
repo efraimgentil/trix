@@ -1,5 +1,6 @@
 package br.com.trix.config;
 
+import br.com.trix.models.converters.PositionReadConverter;
 import br.com.trix.models.converters.PositionWriteConverter;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
@@ -33,7 +34,7 @@ public class SpringDataMongoConfig extends AbstractMongoConfiguration{
   public CustomConversions customConversions() {
     List<Converter<?, ?>> converters = new ArrayList<>();
     converters.add(new PositionWriteConverter() );
-    converters.add(new PositionWriteConverter() );
+    converters.add(new PositionReadConverter() );
     return new CustomConversions(converters);
   }
 

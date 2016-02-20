@@ -36,7 +36,7 @@ public class RoutesServiceTest {
   }
 
   @Test
-  public void doesSaveAllStopForTheGivenVehicleId(){
+  public void shouldSaveAllStopForTheGivenVehicleId(){
     Stop s1 = mock(Stop.class);
     Stop s2 = mock(Stop.class);
     Stop s3 = mock(Stop.class);
@@ -55,12 +55,12 @@ public class RoutesServiceTest {
   }
 
   @Test(expected = StopsTooFarException.class )
-  public void doesThrowAnStopsTooFarExceptionIfDontFoundANearStop(){
+  public void shouldThrowAnStopsTooFarExceptionIfDontFoundANearStop(){
     Stop s1 = mock(Stop.class);
     List<Stop> stops = Arrays.asList(s1);
     Integer vehicleId = 1;
 
-    when(stopRepository.findByVehicleIdAndPointNear(anyInt(), any(Point.class), any(Distance.class)))
+    when(stopRepository.findByVehicleIdAndPositionNear(anyInt(), any(Point.class), any(Distance.class)))
             .thenReturn( Collections.emptyList() );
 
     routesService.orderByNearestsStops(  stops , vehicleId );

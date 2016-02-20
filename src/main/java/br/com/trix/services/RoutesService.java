@@ -33,7 +33,7 @@ public class RoutesService  {
     List<Stop> orderedStops = new ArrayList<>(stops.size());
     Point statingPoint = new Point( 0.0 , 0.0 );
     for(int i = 0; i < stops.size() ; i++ ){
-      List<Stop> nearestStops = stopRepository.findByVehicleIdAndPointNear(vehicleId, statingPoint, new Distance(10));
+      List<Stop> nearestStops = stopRepository.findByVehicleIdAndPositionNear(vehicleId, statingPoint, new Distance(10));
       if(nearestStops.isEmpty()) {
         throw new StopsTooFarException("The distance between the stops are too far");
       }else {

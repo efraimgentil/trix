@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface StopRepository extends MongoRepository<Stop, String> {
 
-  List<Stop> findByVehicleIdAndPointNear(Integer vehicleId, Point point , Distance distance );
+  List<Stop> findByVehicleIdAndPositionNear(Integer vehicleId, Point point , Distance distance );
 
 }
