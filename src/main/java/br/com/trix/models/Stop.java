@@ -17,21 +17,21 @@ public class Stop implements Serializable {
   private String nome;
   private Integer vehicleId;
   private Position position;
-  private Point point;
 
   public Stop() {
   }
 
   public Stop(String nome, Position position) {
     this.nome = nome;
-    setPosition( position );
+    this.position = position;
+  }
+
+  public Point getPoint(){
+    return new Point( position.getLat() , position.getLng() );
   }
 
   public void setPosition(Position position) {
     this.position = position;
-    if(position != null){
-      point = new Point( position.getLat() , position.getLng() );
-    }
   }
 
   @Override
@@ -40,7 +40,6 @@ public class Stop implements Serializable {
     sb.append("id='").append(id).append('\'');
     sb.append(", nome='").append(nome).append('\'');
     sb.append(", position=").append(position);
-    sb.append(", point=").append(point);
     sb.append('}');
     return sb.toString();
   }
@@ -53,7 +52,6 @@ public class Stop implements Serializable {
     if (position != null ? !position.equals(stop.position) : stop.position != null) return false;
     return true;
   }
-
   @Override
   public int hashCode() {
     return position != null ? position.hashCode() : 0;
@@ -74,14 +72,9 @@ public class Stop implements Serializable {
   public Position getPosition() {
     return position;
   }
-  public Point getPoint() {
-    return new Point(point);
-  }
-
   public Integer getVehicleId() {
     return vehicleId;
   }
-
   public void setVehicleId(Integer vehicleId) {
     this.vehicleId = vehicleId;
   }

@@ -29,7 +29,7 @@ public class StopsController {
   }
 
   @RequestMapping(value = "/" , method = RequestMethod.POST)
-  public ResponseEntity<Stop> insert(@RequestBody Stop stop)
+  public ResponseEntity<Stop> insert(@RequestBody  Stop stop)
   {
     stopRepository.save(stop);
     return new ResponseEntity<Stop>(stop , HttpStatus.OK );
