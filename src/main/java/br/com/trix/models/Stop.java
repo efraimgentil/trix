@@ -17,7 +17,7 @@ public class Stop implements Serializable {
 
   @Id
   private String id;
-  private String nome;
+  private String name;
   @Indexed
   private String routeId;
   @GeoSpatialIndexed(name = "position_2dsphere" , type = GeoSpatialIndexType.GEO_2DSPHERE)
@@ -26,8 +26,8 @@ public class Stop implements Serializable {
   public Stop() {
   }
 
-  public Stop(String nome, Position position) {
-    this.nome = nome;
+  public Stop(String name, Position position) {
+    this.name = name;
     this.position = position;
   }
 
@@ -44,7 +44,7 @@ public class Stop implements Serializable {
   public String toString() {
     final StringBuilder sb = new StringBuilder("Stop{");
     sb.append("id='").append(id).append('\'');
-    sb.append(", nome='").append(nome).append('\'');
+    sb.append(", name='").append(name).append('\'');
     sb.append(", position=").append(position);
     sb.append('}');
     return sb.toString();
@@ -69,11 +69,11 @@ public class Stop implements Serializable {
   public void setId(String id) {
     this.id = id;
   }
-  public String getNome() {
-    return nome;
+  public String getName() {
+    return name;
   }
-  public void setNome(String nome) {
-    this.nome = nome;
+  public void setName(String name) {
+    this.name = name;
   }
   public Position getPosition() {
     return position;
@@ -81,12 +81,11 @@ public class Stop implements Serializable {
   public void setPosition(Position position) {
     this.position = position;
   }
-
   public String getRouteId() {
     return routeId;
   }
-
   public void setRouteId(String routeId) {
     this.routeId = routeId;
   }
+
 }

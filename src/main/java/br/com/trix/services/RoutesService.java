@@ -34,6 +34,7 @@ public class RoutesService  {
 
   public Route findBestRoute(List<Stop> stops, String vehicleId ){
     Vehicle vehicle = vehicleRepository.findOne( vehicleId );
+    if(vehicle == null) throw new VehicleDoesnotExistException();
     JsonNode jsonNode = callGoogleService(vehicle, stops);
     List<Stop> orderedStops = orderStops(jsonNode, stops);
     List<Position> path = readPathFromJson(jsonNode);

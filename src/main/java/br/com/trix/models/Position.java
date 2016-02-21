@@ -1,5 +1,7 @@
 package br.com.trix.models;
 
+import org.springframework.data.geo.Point;
+
 import java.io.Serializable;
 
 /**
@@ -17,6 +19,10 @@ public class Position implements Serializable{
     super();
     this.lat = lat;
     this.lng = lng;
+  }
+
+  public Point toPoint(){
+    return new Point( lat , lng );
   }
 
   @Override

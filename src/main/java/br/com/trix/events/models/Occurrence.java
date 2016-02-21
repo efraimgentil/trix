@@ -1,5 +1,6 @@
 package br.com.trix.events.models;
 
+import br.com.trix.models.Position;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,9 +19,19 @@ public class Occurrence {
   private Date logDate;
   @Indexed
   private String vehicleId;
+  private Position currentVehiclePosition;
+  @Indexed
+  private String routeId;
   private String message;
 
   public Occurrence() {
+  }
+
+  public Occurrence(Date logDate, String vehicleId, String routeId, String message) {
+    this.logDate = logDate;
+    this.vehicleId = vehicleId;
+    this.routeId = routeId;
+    this.message = message;
   }
 
   @Override
@@ -64,5 +75,13 @@ public class Occurrence {
 
   public void setMessage(String message) {
     this.message = message;
+  }
+
+  public Position getCurrentVehiclePosition() {
+    return currentVehiclePosition;
+  }
+
+  public void setCurrentVehiclePosition(Position currentVehiclePosition) {
+    this.currentVehiclePosition = currentVehiclePosition;
   }
 }
