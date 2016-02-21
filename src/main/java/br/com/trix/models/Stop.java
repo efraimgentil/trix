@@ -18,8 +18,8 @@ public class Stop implements Serializable {
   @Id
   private String id;
   private String nome;
-  private Integer vehicleId;
-
+  @Indexed
+  private String routeId;
   @GeoSpatialIndexed(name = "position_2dsphere" , type = GeoSpatialIndexType.GEO_2DSPHERE)
   private Position position;
 
@@ -33,6 +33,10 @@ public class Stop implements Serializable {
 
   public Point getPoint(){
     return new Point( position.getLat() , position.getLng() );
+  }
+
+  public String getLatLng(){
+    return String.valueOf(position.getLat()) + "," + String.valueOf(position.getLng());
   }
 
 
@@ -77,10 +81,12 @@ public class Stop implements Serializable {
   public void setPosition(Position position) {
     this.position = position;
   }
-  public Integer getVehicleId() {
-    return vehicleId;
+
+  public String getRouteId() {
+    return routeId;
   }
-  public void setVehicleId(Integer vehicleId) {
-    this.vehicleId = vehicleId;
+
+  public void setRouteId(String routeId) {
+    this.routeId = routeId;
   }
 }

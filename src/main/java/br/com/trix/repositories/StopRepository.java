@@ -1,6 +1,10 @@
 package br.com.trix.repositories;
 
+import br.com.trix.models.Position;
 import br.com.trix.models.Stop;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
@@ -15,6 +19,6 @@ import java.util.List;
  */
 public interface StopRepository extends MongoRepository<Stop, String> {
 
-  List<Stop> findByVehicleIdAndPositionNear(Integer vehicleId, Point point , Distance distance );
+  Page<Stop> findByRouteIdAndPositionNear(String routeId , Point position , Distance distance , Pageable pageable);
 
 }

@@ -30,13 +30,13 @@ public class SpringDataMongoConfig extends AbstractMongoConfiguration{
     return new MongoClient();// Endereco e portas default 127.0.0.1 27017
   }
 
-
+/*
   public CustomConversions customConversions() {
     List<Converter<?, ?>> converters = new ArrayList<>();
     converters.add(new PositionWriteConverter() );
     converters.add(new PositionReadConverter() );
     return new CustomConversions(converters);
-  }
+  }*/
 
 
 }

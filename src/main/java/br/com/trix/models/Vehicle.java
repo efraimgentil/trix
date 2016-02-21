@@ -15,6 +15,7 @@ public class Vehicle implements Serializable {
   @Id
   private String id;
   private Position currentPosition;
+  private String currentRoute;
 
   public Vehicle() {
   }
@@ -23,6 +24,10 @@ public class Vehicle implements Serializable {
       if(currentPosition == null)
         throw new IllegalStateException("No current possition set");
       return new Point(currentPosition.getLat() , currentPosition.getLng());
+  }
+
+  public String getLatLng(){
+    return String.valueOf(currentPosition.getLat()) + "," + String.valueOf(currentPosition.getLng());
   }
 
   @Override
@@ -48,4 +53,11 @@ public class Vehicle implements Serializable {
   }
 
 
+  public String getCurrentRoute() {
+    return currentRoute;
+  }
+
+  public void setCurrentRoute(String currentRoute) {
+    this.currentRoute = currentRoute;
+  }
 }

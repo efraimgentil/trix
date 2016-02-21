@@ -21,7 +21,7 @@ public class Position implements Serializable{
 
   @Override
   public String toString() {
-    return "Location [lat=" + lat + ", lng=" + lng + "]";
+    return "Position [lat=" + lat + ", lng=" + lng + "]";
   }
 
   @Override
