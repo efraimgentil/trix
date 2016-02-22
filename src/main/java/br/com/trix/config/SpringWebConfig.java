@@ -16,7 +16,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "br.com.trix.controllers" })
+@ComponentScan(basePackages = { "br.com.trix.controllers" , "br.com.trix.events.controllers" })
 public class SpringWebConfig extends WebMvcConfigurerAdapter {
 	
 	@Override

@@ -39,6 +39,9 @@ public class RoutesService  {
     List<Stop> orderedStops = orderStops(jsonNode, stops);
     List<Position> path = readPathFromJson(jsonNode);
     Route route = routeRepository.save(new Route(vehicleId, orderedStops, path));
+    saveStops( route );
+    vehicle.setCurrentRoute( route.getId() );
+    vehicleRepository.save( vehicle );
     return route;
   }
 
