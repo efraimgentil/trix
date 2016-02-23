@@ -39,7 +39,7 @@ public class PositionWriteConverterTest {
 
     DBObject converted = converter.convert(position);
 
-    assertNull("should be null", converted == null );
+    assertNull("should be null", converted );
   }
 
 }
