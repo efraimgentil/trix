@@ -1,5 +1,6 @@
 package br.com.trix.events.services;
 
+import br.com.trix.events.models.vo.EventRequest;
 import br.com.trix.models.Position;
 import br.com.trix.models.Vehicle;
 import br.com.trix.repositories.VehicleRepository;
@@ -19,13 +20,10 @@ import java.util.concurrent.atomic.AtomicLong;
 @Lazy(true)
 @Service
 @ManagedResource(objectName = "br.com.trix.events.services:name=EventService",
-description = "Handles all vehicle events")
+  description = "Handles all vehicle events")
 public class EventService {
 
   private List<EventChecker> checkers;
-
-  private AtomicLong executionCount = new AtomicLong(0);
-  private Long lastExecutionTime;
 
   @Autowired VehicleRepository vehicleRepository;
   @Autowired NearStopEventChecker nearStopEventChecker;
@@ -36,31 +34,14 @@ public class EventService {
     checkers = Arrays.asList(nearStopEventChecker , outOfRouteEventChecker );
   }
 
-  public void incrementExecutionCount(){
-    executionCount.incrementAndGet();
-  }
-  public void setLastExecutionTime(Long lastExecutionTime){
-    this.lastExecutionTime = lastExecutionTime;
-  }
-  @ManagedAttribute(description = "Execution Time in Millis", defaultValue = " - " )
-  public Long getExecutionTime(){
-    return lastExecutionTime;
-  }
-  @ManagedAttribute(description = "Execution Count", defaultValue = "0" )
-  public Long getExecutionCount(){
-    return executionCount.get();
-  }
-
-
   @ManagedOperation(  description = "Check all events in the event list")
   @ManagedOperationParameters( {
-       @ManagedOperationParameter(name = "vehicleId", description = "The vehicle to check"),
-       @ManagedOperationParameter(name = "position", description = "The position where are the vehicle")
+       @ManagedOperationParameter(name = "eventRequest", description = "The requisition of a event checking"),
   })
-  public void checkEventOccurrence(String vehicleId, Position position){
-    Vehicle vehicle = vehicleRepository.findOne(vehicleId );
+  public void checkEventOccurrence( EventRequest eventRequest ){
+    Vehicle vehicle = vehicleRepository.findOne( eventRequest.getVehicleId()  );
     for (EventChecker checker : checkers){
-      checker.check( vehicle , position  );
+      checker.check( vehicle , eventRequest.getPosition()  );
     }
   }
 

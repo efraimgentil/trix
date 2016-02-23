@@ -18,11 +18,6 @@ public class EventProfiler {
   @Autowired
   EventService service;
 
-  @Before("execution(* br.com.trix.events.services.EventService.checkEventOccurrence(..))")
-  public void incementEventCount(){
-    service.incrementExecutionCount();
-  }
-
   @Around("execution(* br.com.trix.events.services.EventService.checkEventOccurrence(..))")
   public void logAround(ProceedingJoinPoint joinPoint) throws Throwable {
     System.out.println("Around before is running!");
@@ -33,7 +28,6 @@ public class EventProfiler {
     }catch(Exception e){
       exception = e;
     }
-    service.setLastExecutionTime( System.currentTimeMillis() - initialTime );
     if(exception != null)
       throw exception;
     System.out.println("Around after is running!");

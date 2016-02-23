@@ -1,10 +1,7 @@
 package br.com.trix.services;
 
 import br.com.trix.config.SpringConfig;
-import br.com.trix.models.Position;
-import br.com.trix.models.Route;
-import br.com.trix.models.Stop;
-import br.com.trix.models.Vehicle;
+import br.com.trix.models.*;
 import br.com.trix.repositories.RouteRepository;
 import br.com.trix.repositories.StopRepository;
 import br.com.trix.repositories.VehicleRepository;
@@ -37,7 +34,7 @@ public class RoutesService  {
     if(vehicle == null) throw new VehicleDoesnotExistException();
     JsonNode jsonNode = callGoogleService(vehicle, stops);
     List<Stop> orderedStops = orderStops(jsonNode, stops);
-    List<Position> path = readPathFromJson(jsonNode);
+    List<Coordinate> path = readPathFromJson(jsonNode);
     Route route = routeRepository.save(new Route(vehicleId, orderedStops, path));
     saveStops( route );
     vehicle.setCurrentRoute( route.getId() );
@@ -52,14 +49,14 @@ public class RoutesService  {
     }
   }
 
-  protected List<Position> readPathFromJson(JsonNode result) {
-    List<Position> positions = new ArrayList<>();
+  protected List<Coordinate> readPathFromJson(JsonNode result) {
+    List<Coordinate> positions = new ArrayList<>();
     for(JsonNode legs : result.get("legs")){
       for(JsonNode step : legs.get("steps")) {
         JsonNode s =  step.get("start_location");
-        positions.add(new Position(s.get("lat").asDouble() , s.get("lng").asDouble() ));
+        positions.add( new Coordinate(new Position(s.get("lat").asDouble() , s.get("lng").asDouble() ) ));
         s =  step.get("end_location");
-        positions.add(new Position( s.get("lat").asDouble()  , s.get("lng").asDouble() ));
+        positions.add( new Coordinate(new Position( s.get("lat").asDouble()  , s.get("lng").asDouble() ) ));
       }
     }
     return positions;

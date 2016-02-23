@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.geo.Circle;
 import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.NearQuery;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.math.BigDecimal;
@@ -28,38 +30,14 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
   @Autowired
   MongoTemplate mongoTemplate;
 
-  @Autowired
-  Mongo mongo;
-
-  @Qualifier(SpringDataMongoConfig.MONGO_DB)
-  @Autowired
-  String mongoDbName;
-
-  public List<Route> findRouteNearPosition(Vehicle vehicle, Position position , Distance acceptableDistance) {
-    BigDecimal b = new BigDecimal(0.5).divide( new BigDecimal( Metrics.KILOMETERS.getMultiplier() ) , MathContext.DECIMAL32 );
-
-
-
-    String command = "{ path: {"
-     +  "$geoWithin: {"
-     +   "$centerSphere: [ [ "+position.getLat()+"," + position.getLng()+ "]," + b.toString() + " ]"
-     + "}"
-     + "} }";
-    BasicDBList centerSphere = new BasicDBList();
-    BasicDBList coodenates = new BasicDBList();
-    coodenates.add(  position.getLat() );
-    coodenates.add(  position.getLng() );
-    centerSphere.add( coodenates );
-    centerSphere.add( b );
-    DBObject o = new BasicDBObject("path" , new BasicDBObject("$geoWithin" , new BasicDBObject("$centerSphere" , centerSphere )) );
-    DBCollection collection = mongo.getDB( mongoDbName ).getCollection("routes");
-    DBCursor dbObjects = collection.find(o);
-    //List<Route> routes = mongoTemplate.find(new BasicQuery(o), Route.class, "routes");
-
-    Query query = Query
-            .query(Criteria.where("_id").is(  vehicle.getCurrentRoute() ))
-            .addCriteria( Criteria.where("path").withinSphere(new Circle(position.toPoint(), b.doubleValue()) ));
-    return mongoTemplate.find(query, Route.class , "routes");
+  public GeoResults<Route> findRouteNearPosition(Vehicle vehicle, Position position, double acceptableRange ) {
+    Query query = new Query();
+    query.addCriteria( Criteria.where("vehicleId").is( vehicle.getId() ) );
+    NearQuery near = NearQuery.near(  position.getLat() , position.getLng()  )
+            .maxDistance( acceptableRange , Metrics.KILOMETERS)
+            .spherical(true)
+            .query(query);
+    return mongoTemplate.geoNear( near , Route.class , "routes");
   }
 
 }

@@ -2,6 +2,7 @@ package br.com.trix.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.geo.Point;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -13,6 +14,7 @@ import java.io.Serializable;
  * Created by efraimgentil<efraimgentil@gmail.com> on 18/02/16.
  */
 @Document(collection = "stops")
+@CompoundIndex(collection = "stops", name = "position_2dsphere", def = "{ 'position': '2dsphere' } "  )
 public class Stop implements Serializable {
 
   @Id
@@ -20,7 +22,6 @@ public class Stop implements Serializable {
   private String name;
   @Indexed
   private String routeId;
-  @GeoSpatialIndexed(name = "position_2dsphere" , type = GeoSpatialIndexType.GEO_2DSPHERE)
   private Position position;
 
   public Stop() {
@@ -38,7 +39,6 @@ public class Stop implements Serializable {
   public String getLatLng(){
     return String.valueOf(position.getLat()) + "," + String.valueOf(position.getLng());
   }
-
 
   @Override
   public String toString() {

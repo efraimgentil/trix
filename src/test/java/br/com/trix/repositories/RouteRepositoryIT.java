@@ -36,8 +36,7 @@ public class RouteRepositoryIT {
   @Autowired
   MongoTemplate mongoTemplate;
 
-
-  @Test
+  /*@Test
   public void shouldReturnRouteNearThePositionForTheVehicle(){
     Vehicle vehicle = new Vehicle();
     vehicle.setId("56c9cd41c830f22b6a9b4660");
@@ -54,14 +53,10 @@ public class RouteRepositoryIT {
   @Test
   public void t(){
     Query query = new Query();
-    /*Criteria.where("position").near(new Point(-3.7716079842618810, -38.48313859663904) )*/
-    query.limit(1)
-          .fields().include("stops").exclude("_id");
-                    //.elemMatch("stops", Criteria.where("position").near(new Point(-3.7452985764579325, -38.52330174297093)));
-    /*System.out.println( mongoTemplate.find(query, Route.class, "routes"));*/
-    NearQuery near = NearQuery.near(-3.7490884647584791, -38.52255072444676).spherical(true).query(query);
-    GeoResults<Route> geoResults = mongoTemplate.geoNear(near, Route.class, "routes");
-    System.out.println( geoResults );
-  }
+    NearQuery near = NearQuery.near(-3.7450951639098378, -38.51478321477771)
+            .maxDistance( 0.5 , Metrics.KILOMETERS).spherical(true).query(query);
+    GeoResults<Route> routes = mongoTemplate.geoNear(near, Route.class, "routes");
+    System.out.println(routes.getContent().isEmpty() );
+  }*/
 
 }

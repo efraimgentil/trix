@@ -4,6 +4,7 @@ import br.com.trix.models.Position;
 import br.com.trix.models.Route;
 import br.com.trix.models.Vehicle;
 import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.GeoResults;
 
 import java.util.List;
 
@@ -13,6 +14,6 @@ import java.util.List;
 public interface RouteRepositoryCustom {
 
 
-  List<Route> findRouteNearPosition(Vehicle vehicle , Position position, Distance acceptableDistance );
+  GeoResults<Route> findRouteNearPosition(Vehicle vehicle , Position position , double acceptableRange );
 
 }

@@ -19,6 +19,6 @@ import java.util.List;
  */
 public interface StopRepository extends MongoRepository<Stop, String> {
 
-  Page<Stop> findByRouteIdAndPositionNear(String routeId , Point position , Distance distance , Pageable pageable);
+  Page<Stop> findByRouteIdAndPositionNear(String routeId , Point point , Distance distance , Pageable pageable);
 
 }

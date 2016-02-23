@@ -1,6 +1,7 @@
 package br.com.trix.events.models;
 
 import br.com.trix.models.Position;
+import br.com.trix.models.Vehicle;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,23 +16,31 @@ public class Occurrence {
 
   @Id
   private String id;
+  private OccurrenceType type;
   @Indexed
   private Date logDate;
+
   @Indexed
   private String vehicleId;
-  private Position currentVehiclePosition;
+
+  private Position vehiclePosition;
+
   @Indexed
   private String routeId;
+
   private String message;
 
   public Occurrence() {
   }
 
-  public Occurrence(Date logDate, String vehicleId, String routeId, String message) {
-    this.logDate = logDate;
-    this.vehicleId = vehicleId;
-    this.routeId = routeId;
-    this.message = message;
+  public static Occurrence newOccurrence(Vehicle vehicle , Position position, OccurrenceType type){
+    Occurrence occurrence = new Occurrence();
+    occurrence.setLogDate( new Date() );
+    occurrence.setVehiclePosition(position);
+    occurrence.setVehicleId(vehicle.getId());
+    occurrence.setRouteId(vehicle.getCurrentRoute());
+    occurrence.setType(type);
+    return occurrence;
   }
 
   @Override
@@ -48,40 +57,45 @@ public class Occurrence {
   public String getId() {
     return id;
   }
-
   public void setId(String id) {
     this.id = id;
   }
-
   public Date getLogDate() {
     return logDate;
   }
-
   public void setLogDate(Date logDate) {
     this.logDate = logDate;
   }
-
   public String getVehicleId() {
     return vehicleId;
   }
-
   public void setVehicleId(String vehicleId) {
     this.vehicleId = vehicleId;
   }
-
   public String getMessage() {
     return message;
   }
-
   public void setMessage(String message) {
     this.message = message;
   }
-
-  public Position getCurrentVehiclePosition() {
-    return currentVehiclePosition;
+  public String getRouteId() {
+    return routeId;
+  }
+  public void setRouteId(String routeId) {
+    this.routeId = routeId;
+  }
+  public Position getVehiclePosition() {
+    return vehiclePosition;
+  }
+  public void setVehiclePosition(Position vehiclePosition) {
+    this.vehiclePosition = vehiclePosition;
+  }
+  public OccurrenceType getType() {
+    return type;
+  }
+  public void setType(OccurrenceType type) {
+    this.type = type;
   }
 
-  public void setCurrentVehiclePosition(Position currentVehiclePosition) {
-    this.currentVehiclePosition = currentVehiclePosition;
-  }
+
 }

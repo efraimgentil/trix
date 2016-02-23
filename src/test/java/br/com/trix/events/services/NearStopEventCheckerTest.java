@@ -53,7 +53,7 @@ public class NearStopEventCheckerTest {
     assertTrue("Should return occurrence with filled logDate ", occurrence.getLogDate() != null );
     assertEquals("Should return occurrence with vahicleId ", vehicleId,  occurrence.getVehicleId()  );
     assertEquals("Should return occurrence with routeId equal vehicle.currentRouteId ", vehicleId,  occurrence.getVehicleId()  );
-    assertEquals("Should return occurrence with current vehicle position", position, occurrence.getCurrentVehiclePosition());
+    assertEquals("Should return occurrence with current vehicle position", position, occurrence.getVehiclePosition() );
   }
 
   @Test(expected =  EventException.class )

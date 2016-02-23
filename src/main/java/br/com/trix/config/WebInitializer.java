@@ -6,7 +6,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[]{ SpringConfig.class, SpringDataMongoConfig.class  };
+		return new Class<?>[]{ SpringConfig.class, JmxConfig.class , SpringDataMongoConfig.class };
 	}
 
 	@Override
