@@ -8,13 +8,11 @@ import br.com.trix.repositories.OccurrenceRepository;
 import br.com.trix.repositories.RouteRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.geo.GeoResults;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -64,7 +62,7 @@ public class OutOfRouteEventCheckerTest {
 
     checker.check( vehicle , position );
 
-    verify( occurrenceRepository , never() ).save( any(Occurrence.class) );
+    verify( occurrenceRepository , never() ).save(any(Occurrence.class));
   }
 
 

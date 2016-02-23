@@ -28,7 +28,6 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class StopRepositoryIT {
 
-
   @Autowired
   private StopRepository stopRepository;
 
