@@ -8,6 +8,7 @@ import br.com.trix.repositories.OccurrenceRepository;
 import br.com.trix.repositories.StopRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.geo.Distance;
@@ -28,6 +29,7 @@ public class NearStopEventCheckerTest {
   NearStopEventChecker checker;
   StopRepository mockedStopRepository;
   OccurrenceRepository mockedOccurrenceRepository;
+  MessageSource messageSource;
 
   @Before
   public void setUp(){
@@ -36,6 +38,8 @@ public class NearStopEventCheckerTest {
     checker.stopRepository = mockedStopRepository;
     mockedOccurrenceRepository = mock(OccurrenceRepository.class);
     checker.occurrenceRepository = mockedOccurrenceRepository;
+    messageSource = mock(MessageSource.class);
+    checker.messageSource = messageSource;
   }
 
   @Test

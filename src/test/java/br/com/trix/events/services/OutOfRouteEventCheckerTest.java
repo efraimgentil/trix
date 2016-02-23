@@ -8,8 +8,10 @@ import br.com.trix.repositories.OccurrenceRepository;
 import br.com.trix.repositories.RouteRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.MessageSource;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.geo.GeoResults;
+import sun.plugin2.message.Message;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class OutOfRouteEventCheckerTest {
   OutOfRouteEventChecker checker;
   RouteRepository routeRepository;
   OccurrenceRepository occurrenceRepository;
+  MessageSource messageSource;
 
   @Before
   public void setUp(){
@@ -31,6 +34,8 @@ public class OutOfRouteEventCheckerTest {
     checker.routeRepository = routeRepository;
     occurrenceRepository = mock(OccurrenceRepository.class);
     checker.occurrenceRepository = occurrenceRepository;
+    messageSource = mock(MessageSource.class);
+    checker.messageSource = messageSource;
   }
 
   @Test
