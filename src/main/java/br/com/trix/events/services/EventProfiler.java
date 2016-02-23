@@ -15,9 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class EventProfiler {
 
-  @Autowired
-  EventService service;
-
   @Around("execution(* br.com.trix.events.services.EventService.checkEventOccurrence(..))")
   public void logAround(ProceedingJoinPoint joinPoint) throws Throwable {
     System.out.println("Around before is running!");

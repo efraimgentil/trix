@@ -33,6 +33,8 @@ public class Stop implements Serializable {
   }
 
   public Point getPoint(){
+    if(position == null)
+      throw new IllegalStateException("No current possition set for the Stop");
     return new Point( position.getLat() , position.getLng() );
   }
 

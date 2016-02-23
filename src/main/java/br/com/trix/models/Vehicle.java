@@ -22,7 +22,7 @@ public class Vehicle implements Serializable {
 
   public Point getPoint() {
       if(currentPosition == null)
-        throw new IllegalStateException("No current possition set");
+        throw new IllegalStateException("No current possition set for the vehicle");
       return new Point(currentPosition.getLat() , currentPosition.getLng());
   }
 

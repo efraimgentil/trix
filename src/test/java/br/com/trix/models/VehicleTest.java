@@ -35,6 +35,4 @@ public class VehicleTest {
     assertEquals("Point.y should be the same of the Position.lng", p.getLng() , point.getY() , 0.0);
   }
 
-
-
 }
