@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.springframework.context.MessageSource;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.geo.GeoResults;
-import sun.plugin2.message.Message;
 
 import java.util.List;
 
