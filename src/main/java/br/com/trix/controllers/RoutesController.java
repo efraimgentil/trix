@@ -31,16 +31,13 @@ public class RoutesController {
   }
 
   @RequestMapping(value = "/{id}/" , method = RequestMethod.GET)
-  public ResponseEntity<Route> route(@PathVariable("id") String id){
-    return new ResponseEntity<Route>(routeRepository.findOne(id) , HttpStatus.OK);
+  public Route route(@PathVariable("id") String id){
+    return routeRepository.findOne(id);
   }
 
   @RequestMapping(value = "/" , method = RequestMethod.POST)
-  public ResponseEntity<Route> generateRoute(@RequestBody GenerateRoute generateRoute ){
-
-    return new ResponseEntity<Route>(
-            routesService.findBestRoute( generateRoute.getStops() , generateRoute.getVehicle()  )
-            , HttpStatus.OK );
+  public Route generateRoute(@RequestBody GenerateRoute generateRoute ){
+    return routesService.findBestRoute( generateRoute.getStops() , generateRoute.getVehicle()  );
   }
 
 }

@@ -28,13 +28,13 @@ public class VehicleController {
   }
 
   @RequestMapping(value = "/{id}/" , method = RequestMethod.GET)
-  public ResponseEntity<Vehicle> vehicle(@PathVariable("id") String id){
-    return new ResponseEntity<Vehicle>(vehicleRepository.findOne(id) , HttpStatus.OK);
+  public Vehicle vehicle(@PathVariable("id") String id){
+    return vehicleRepository.findOne(id);
   }
 
   @RequestMapping(value = "/" , method = RequestMethod.POST)
-  public ResponseEntity<Vehicle> vehicle(@RequestBody Vehicle vehicle){
-    return new ResponseEntity<Vehicle>( vehicleRepository.save( vehicle ) , HttpStatus.OK );
+  public Vehicle vehicle(@RequestBody Vehicle vehicle){
+    return vehicleRepository.save( vehicle );
   }
 
 }

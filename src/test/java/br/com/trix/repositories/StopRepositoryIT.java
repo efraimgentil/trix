@@ -68,11 +68,10 @@ public class StopRepositoryIT {
 
     Page<Stop> byVehicleIdNear = stopRepository.findByRouteIdAndPositionNear(vehicle.getCurrentRoute(), new Point(49.0, 50.0), new Distance(100) , new PageRequest(0 , 1));
 
-    //assertFalse( byVehicleIdNear.isEmpty() );
-   /* for( Stop s : byVehicleIdNear ) {
-      assertEquals( vehicle.getId() , s.getVehicleId());
-    }*/
-    System.out.println("byVehicleIdNear = " + byVehicleIdNear.getContent().get(0) );
+    assertFalse( byVehicleIdNear.getContent().isEmpty() );
+    for( Stop s : byVehicleIdNear ) {
+      assertEquals( vehicle.getCurrentRoute() , s.getRouteId() );
+    }
   }
 
 

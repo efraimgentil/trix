@@ -17,7 +17,7 @@ public class MongoTestConfig extends SpringDataMongoConfig {
   @Qualifier(MONGO_DB)
   @Override
   protected String getDatabaseName() {
-    return "trix";
+    return "trix-test";
   }
 
 }
