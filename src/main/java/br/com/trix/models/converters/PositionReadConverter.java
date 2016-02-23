@@ -19,7 +19,7 @@ public class PositionReadConverter implements Converter<DBObject, Position> {
   public Position convert(DBObject dbObject) {
     if(dbObject != null){
       BasicDBList list = (BasicDBList) dbObject.get("coordinates");
-      if(!list.isEmpty()) {
+      if(list != null && list.size() == 2) {
         Double lat = new Double(String.valueOf(list.get(0)));
         Double lng = new Double(String.valueOf(list.get(1)));
         return new Position(lat, lng);
