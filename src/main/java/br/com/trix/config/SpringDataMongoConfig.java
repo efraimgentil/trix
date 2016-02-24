@@ -2,8 +2,7 @@ package br.com.trix.config;
 
 import br.com.trix.models.converters.PositionReadConverter;
 import br.com.trix.models.converters.PositionWriteConverter;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
+import com.mongodb.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +12,7 @@ import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,6 +34,13 @@ public class SpringDataMongoConfig extends AbstractMongoConfiguration{
   @Bean
   @Override
   public Mongo mongo() throws Exception {
+    //TO USE IN OPENSHIFT
+    String clientUri = System.getenv("OPENSHIFT_MONGODB_DB_URL");
+    System.out.println("clientUri:" + clientUri);
+    if(clientUri != null){
+      System.out.println("clientUri:" + clientUri);
+      return new MongoClient( new MongoClientURI(clientUri) );
+    }
     return new MongoClient();// Endereco e portas default 127.0.0.1 27017
   }
 

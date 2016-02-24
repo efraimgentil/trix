@@ -1,5 +1,6 @@
 package br.com.trix.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,18 +15,21 @@ public class Vehicle implements Serializable {
 
   @Id
   private String id;
+  private String name;
   private Position currentPosition;
   private String currentRoute;
 
   public Vehicle() {
   }
 
+  @JsonIgnore
   public Point getPoint() {
       if(currentPosition == null)
         throw new IllegalStateException("No current possition set for the vehicle");
       return new Point(currentPosition.getLat() , currentPosition.getLng());
   }
 
+  @JsonIgnore
   public String getLatLng(){
     return String.valueOf(currentPosition.getLat()) + "," + String.valueOf(currentPosition.getLng());
   }
@@ -59,5 +63,13 @@ public class Vehicle implements Serializable {
 
   public void setCurrentRoute(String currentRoute) {
     this.currentRoute = currentRoute;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 }

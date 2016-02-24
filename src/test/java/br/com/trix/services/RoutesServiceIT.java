@@ -7,6 +7,7 @@ import br.com.trix.models.Route;
 import br.com.trix.models.Stop;
 import br.com.trix.models.Vehicle;
 import br.com.trix.repositories.VehicleRepository;
+import br.com.trix.services.exceptions.RouteNotFoundException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
@@ -16,7 +17,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;

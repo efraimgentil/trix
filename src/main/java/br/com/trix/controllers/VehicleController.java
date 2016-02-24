@@ -1,5 +1,6 @@
 package br.com.trix.controllers;
 
+import br.com.trix.controllers.exceptions.ResourceNotFoundException;
 import br.com.trix.models.Route;
 import br.com.trix.models.Vehicle;
 import br.com.trix.models.vo.GenerateRoute;
@@ -29,12 +30,20 @@ public class VehicleController {
 
   @RequestMapping(value = "/{id}/" , method = RequestMethod.GET)
   public Vehicle vehicle(@PathVariable("id") String id){
-    return vehicleRepository.findOne(id);
+    Vehicle one = vehicleRepository.findOne(id);
+    if(one == null) throw new ResourceNotFoundException();
+    return one;
   }
 
   @RequestMapping(value = "/" , method = RequestMethod.POST)
   public Vehicle vehicle(@RequestBody Vehicle vehicle){
     return vehicleRepository.save( vehicle );
+  }
+
+  @RequestMapping(value = "/{id}/" , method = RequestMethod.DELETE)
+  public Vehicle deleteVehicle(@PathVariable("id") String id){
+    vehicleRepository.delete(id);
+    return null;
   }
 
 }

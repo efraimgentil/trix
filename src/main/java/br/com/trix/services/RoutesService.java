@@ -5,6 +5,8 @@ import br.com.trix.models.*;
 import br.com.trix.repositories.RouteRepository;
 import br.com.trix.repositories.StopRepository;
 import br.com.trix.repositories.VehicleRepository;
+import br.com.trix.services.exceptions.RouteNotFoundException;
+import br.com.trix.services.exceptions.VehicleDoesnotExistException;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
