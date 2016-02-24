@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,6 +22,7 @@ import java.util.List;
 public class SpringDataMongoConfig extends AbstractMongoConfiguration{
 
   public static final String MONGO_DB = "mongo-database-name";
+  private final String clienteURIOpenshift = System.getenv("OPENSHIFT_MONGODB_DB_URL");
 
   @Bean
   @Qualifier(MONGO_DB)
@@ -35,11 +35,8 @@ public class SpringDataMongoConfig extends AbstractMongoConfiguration{
   @Override
   public Mongo mongo() throws Exception {
     //TO USE IN OPENSHIFT
-    String clientUri = System.getenv("OPENSHIFT_MONGODB_DB_URL");
-    System.out.println("clientUri:" + clientUri);
-    if(clientUri != null){
-      System.out.println("clientUri:" + clientUri);
-      return new MongoClient( new MongoClientURI(clientUri) );
+    if(clienteURIOpenshift != null){
+      return new MongoClient( new MongoClientURI(clienteURIOpenshift) );
     }
     return new MongoClient();// Endereco e portas default 127.0.0.1 27017
   }

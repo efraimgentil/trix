@@ -5,9 +5,7 @@ import br.com.trix.events.services.exceptions.EventWithoutPositionException;
 import br.com.trix.models.Position;
 import br.com.trix.models.Vehicle;
 import br.com.trix.repositories.VehicleRepository;
-import br.com.trix.services.exceptions.DefaultValidationException;
-import br.com.trix.services.exceptions.NoPositionFoundException;
-import br.com.trix.services.exceptions.VehicleDoesnotExistException;
+import br.com.trix.services.exceptions.VehicleDoesNotExistException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
@@ -15,7 +13,6 @@ import org.mockito.InOrder;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 /**
  * Created by efraimgentil<efraimgentil@gmail.com> on 23/02/16.
@@ -32,7 +29,7 @@ public class EventServiceTest {
     eventService.vehicleRepository = vehicleRepository;
   }
 
-  @Test(expected = VehicleDoesnotExistException.class )
+  @Test(expected = VehicleDoesNotExistException.class )
   public void shouldThrowVehicleNotFoundWhenTheVehicleIsNull(){
     Vehicle vehicle = null;
     EventRequest eventRequest = null;

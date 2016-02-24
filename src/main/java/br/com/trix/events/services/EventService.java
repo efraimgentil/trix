@@ -4,7 +4,7 @@ import br.com.trix.events.models.vo.EventRequest;
 import br.com.trix.events.services.exceptions.EventWithoutPositionException;
 import br.com.trix.models.Vehicle;
 import br.com.trix.repositories.VehicleRepository;
-import br.com.trix.services.exceptions.VehicleDoesnotExistException;
+import br.com.trix.services.exceptions.VehicleDoesNotExistException;
 import com.codahale.metrics.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -54,7 +54,7 @@ public class EventService {
   }
 
   protected void validateEventRequest(EventRequest eventRequest, Vehicle vehicle ){
-    if(vehicle == null) throw new VehicleDoesnotExistException();
+    if(vehicle == null) throw new VehicleDoesNotExistException();
     if(eventRequest.getPosition() == null ) throw new EventWithoutPositionException();
   }
 

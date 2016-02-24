@@ -5,8 +5,10 @@ import br.com.trix.models.*;
 import br.com.trix.repositories.RouteRepository;
 import br.com.trix.repositories.StopRepository;
 import br.com.trix.repositories.VehicleRepository;
-import br.com.trix.services.exceptions.RouteNotFoundException;
-import br.com.trix.services.exceptions.VehicleDoesnotExistException;
+import br.com.trix.services.exceptions.NoWayPointOrderException;
+import br.com.trix.services.exceptions.RouteCreationException;
+import br.com.trix.services.exceptions.RouteDoesNotExistException;
+import br.com.trix.services.exceptions.VehicleDoesNotExistException;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,7 +35,7 @@ public class RoutesService  {
 
   public Route findBestRoute(List<Stop> stops, String vehicleId ){
     Vehicle vehicle = vehicleRepository.findOne( vehicleId );
-    if(vehicle == null) throw new VehicleDoesnotExistException();
+    if(vehicle == null) throw new VehicleDoesNotExistException();
     JsonNode jsonNode = callGoogleService(vehicle, stops);
     List<Stop> orderedStops = orderStops(jsonNode, stops);
     List<Coordinate> path = readPathFromJson(jsonNode);
@@ -67,14 +69,13 @@ public class RoutesService  {
   protected JsonNode callGoogleService(Vehicle vehicle , List<Stop> stops ){
     String uri = mountApiUri( vehicle , stops );
     JsonNode result = new RestTemplate().getForObject( uri , JsonNode.class);
-    System.out.println(result);
     return validateResultAndReturn(result);
   }
 
-  private JsonNode validateResultAndReturn(JsonNode result) {
+  protected JsonNode validateResultAndReturn(JsonNode result) {
     String status = result.get("status").asText();
     if("NOT_FOUND".equals(status)){
-      throw new RouteNotFoundException();
+      throw new RouteCreationException();
     }
     return result.get("routes").get(0);
   }
@@ -94,6 +95,7 @@ public class RoutesService  {
 
   protected List<Stop> orderStops(JsonNode routeNode, List<Stop> stops) {
     final List<Stop> orderedStops = new ArrayList<>();
+    if( !routeNode.has("waypoint_order") ) throw new NoWayPointOrderException();
     for (JsonNode n : routeNode.get("waypoint_order")) {
       orderedStops.add(stops.get(n.asInt()));
     }

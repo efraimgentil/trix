@@ -1,10 +1,20 @@
 package br.com.trix.services;
 
 
+import br.com.trix.models.Stop;
 import br.com.trix.repositories.RouteRepository;
+import br.com.trix.services.exceptions.NoWayPointOrderException;
+import br.com.trix.services.exceptions.RouteCreationException;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.Before;
+import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by efraimgentil<efraimgentil@gmail.com> on 18/02/16.
@@ -20,6 +30,57 @@ public class RoutesServiceTest {
     routeRepository = mock(RouteRepository.class);
     routesService.routeRepository = routeRepository;
   }
+
+
+  @Test
+  public void shouldOrderTheListOfStopsBasedInTheJsonResponse(){
+    Stop s1 = mock( Stop.class );
+    Stop s2 = mock( Stop.class );
+    Stop s3 = mock( Stop.class );
+    List<Stop> stops = Arrays.asList( s1 , s2, s3 );
+    JsonNode jn = mock(JsonNode.class);
+    JsonNode waypointNode = mock(JsonNode.class);
+    JsonNode n1 = mock(JsonNode.class);
+    JsonNode n2 = mock(JsonNode.class);
+    JsonNode n3 = mock(JsonNode.class);
+
+    when(jn.has("waypoint_order")).thenReturn(true);
+    when(jn.get("waypoint_order")).thenReturn( waypointNode );
+    when(waypointNode.iterator()).thenReturn(Arrays.asList( n1 , n2 , n3).iterator() );
+    when(n1.asInt()).thenReturn(1);
+    when(n2.asInt()).thenReturn(2);
+    when(n3.asInt()).thenReturn(0);
+
+    List<Stop> stops1 = routesService.orderStops(jn, stops);
+
+    assertTrue( stops1.get(0) == s2 );
+    assertTrue( stops1.get(1) == s3 );
+    assertTrue( stops1.get(2) == s1 );
+  }
+
+
+  @Test(expected = NoWayPointOrderException.class )
+  public void shouldThrowNoWayPointOrderExceptionWhenTheJsonResponseDontHaveTheKeyWaypointOrder(){
+    Stop s1 = mock( Stop.class );
+    Stop s2 = mock( Stop.class );
+    Stop s3 = mock( Stop.class );
+    List<Stop> stops = Arrays.asList( s1 , s2, s3 );
+    JsonNode jn = mock(JsonNode.class);
+
+    routesService.orderStops( jn  , stops );
+  }
+
+  @Test(expected = RouteCreationException.class)
+  public void shouldThrowRouteNotFoundExceptionWhenTheServiceResultSendAnStatusNOT_FOUND(){
+    JsonNode jn = mock(JsonNode.class);
+    JsonNode statusNode = mock(JsonNode.class);
+    when( jn.get("status") ).thenReturn( statusNode );
+    when( statusNode.asText() ).thenReturn("NOT_FOUND");
+
+    routesService.validateResultAndReturn(jn );
+  }
+
+
 
  /* @Test
   public void shouldSaveAllStopForTheGivenVehicleId(){
