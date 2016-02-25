@@ -1,5 +1,6 @@
 package br.com.trix.events.services;
 
+import br.com.trix.events.models.Occurrence;
 import br.com.trix.models.Position;
 import br.com.trix.models.Vehicle;
 
@@ -8,5 +9,5 @@ import br.com.trix.models.Vehicle;
  */
 public interface EventChecker {
 
-  public void check(Vehicle vehicle, Position position );
+  public Occurrence check(Vehicle vehicle, Position position );
 }

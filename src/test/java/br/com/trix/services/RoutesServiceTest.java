@@ -2,6 +2,7 @@ package br.com.trix.services;
 
 
 import br.com.trix.models.Stop;
+import br.com.trix.models.vo.StopVO;
 import br.com.trix.repositories.RouteRepository;
 import br.com.trix.services.exceptions.NoWayPointOrderException;
 import br.com.trix.services.exceptions.RouteCreationException;
@@ -34,10 +35,10 @@ public class RoutesServiceTest {
 
   @Test
   public void shouldOrderTheListOfStopsBasedInTheJsonResponse(){
-    Stop s1 = mock( Stop.class );
-    Stop s2 = mock( Stop.class );
-    Stop s3 = mock( Stop.class );
-    List<Stop> stops = Arrays.asList( s1 , s2, s3 );
+    StopVO s1 = mock( StopVO.class );
+    StopVO s2 = mock( StopVO.class );
+    StopVO s3 = mock( StopVO.class );
+    List<StopVO> stops = Arrays.asList( s1 , s2, s3 );
     JsonNode jn = mock(JsonNode.class);
     JsonNode waypointNode = mock(JsonNode.class);
     JsonNode n1 = mock(JsonNode.class);
@@ -51,7 +52,7 @@ public class RoutesServiceTest {
     when(n2.asInt()).thenReturn(2);
     when(n3.asInt()).thenReturn(0);
 
-    List<Stop> stops1 = routesService.orderStops(jn, stops);
+    List<StopVO> stops1 = routesService.orderStops(jn, stops);
 
     assertTrue( stops1.get(0) == s2 );
     assertTrue( stops1.get(1) == s3 );
@@ -61,10 +62,10 @@ public class RoutesServiceTest {
 
   @Test(expected = NoWayPointOrderException.class )
   public void shouldThrowNoWayPointOrderExceptionWhenTheJsonResponseDontHaveTheKeyWaypointOrder(){
-    Stop s1 = mock( Stop.class );
-    Stop s2 = mock( Stop.class );
-    Stop s3 = mock( Stop.class );
-    List<Stop> stops = Arrays.asList( s1 , s2, s3 );
+    StopVO s1 = mock( StopVO.class );
+    StopVO s2 = mock( StopVO.class );
+    StopVO s3 = mock( StopVO.class );
+    List<StopVO> stops = Arrays.asList( s1 , s2, s3 );
     JsonNode jn = mock(JsonNode.class);
 
     routesService.orderStops( jn  , stops );

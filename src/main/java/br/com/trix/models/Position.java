@@ -25,6 +25,10 @@ public class Position implements Serializable{
     return new Point( lat , lng );
   }
 
+  public String getLatLng(){
+    return String.valueOf(lat) + "," + String.valueOf(lng);
+  }
+
   @Override
   public String toString() {
     return "Position [lat=" + lat + ", lng=" + lng + "]";

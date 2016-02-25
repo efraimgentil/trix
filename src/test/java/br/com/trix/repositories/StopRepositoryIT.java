@@ -65,7 +65,7 @@ public class StopRepositoryIT {
     Vehicle vehicle = new Vehicle();
     vehicle.setCurrentRoute("2");
 
-    Page<Stop> byVehicleIdNear = stopRepository.findByRouteIdAndPositionNear(vehicle.getCurrentRoute(), new Point(49.0, 50.0), new Distance(100) , new PageRequest(0 , 1));
+    Page<Stop> byVehicleIdNear = stopRepository.findByRouteIdAndPositionNear(vehicle.getCurrentRoute(), new Point(49.0, 50.0) , new PageRequest(0 , 1));
 
     assertFalse( byVehicleIdNear.getContent().isEmpty() );
     for( Stop s : byVehicleIdNear ) {

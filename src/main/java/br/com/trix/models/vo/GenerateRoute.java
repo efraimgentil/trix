@@ -10,7 +10,7 @@ import java.util.List;
 public class GenerateRoute {
 
   private String vehicle;
-  private List<Stop> stops;
+  private List<StopVO> stops;
 
   public GenerateRoute() {
   }
@@ -23,11 +23,11 @@ public class GenerateRoute {
     this.vehicle = vehicle;
   }
 
-  public List<Stop> getStops() {
+  public List<StopVO> getStops() {
     return stops;
   }
 
-  public void setStops(List<Stop> stops) {
+  public void setStops(List<StopVO> stops) {
     this.stops = stops;
   }
 }

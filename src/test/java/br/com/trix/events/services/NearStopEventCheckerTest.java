@@ -67,7 +67,7 @@ public class NearStopEventCheckerTest {
     Stop stop = mock(Stop.class);
     Page<Stop> mockedPage = mock(Page.class);
     when( mockedStopRepository.findByRouteIdAndPositionNear(
-            anyString(), any(Point.class) , any(Distance.class) , any(PageRequest.class) )
+            anyString(), any(Point.class) , any(PageRequest.class) )
     ).thenReturn(mockedPage);
     when(mockedPage.getContent()).thenReturn(Collections.emptyList());
 
@@ -81,7 +81,7 @@ public class NearStopEventCheckerTest {
     Stop stop = mock(Stop.class);
     Page<Stop> mockedPage = mock(Page.class);
     when( mockedStopRepository.findByRouteIdAndPositionNear(
-                    anyString(), any(Point.class) , any(Distance.class) , any(PageRequest.class) )
+                    anyString(), any(Point.class), any(PageRequest.class) )
     ).thenReturn(mockedPage);
     when(mockedPage.getContent()).thenReturn(Arrays.asList(new Stop()));
 

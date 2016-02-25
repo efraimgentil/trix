@@ -2,6 +2,7 @@ package br.com.trix.services;
 
 import br.com.trix.config.SpringConfig;
 import br.com.trix.models.*;
+import br.com.trix.models.vo.StopVO;
 import br.com.trix.repositories.RouteRepository;
 import br.com.trix.repositories.StopRepository;
 import br.com.trix.repositories.VehicleRepository;
@@ -33,11 +34,11 @@ public class RoutesService  {
   @Autowired VehicleRepository vehicleRepository;
   @Autowired StopRepository stopRepository;
 
-  public Route findBestRoute(List<Stop> stops, String vehicleId ){
+  public Route findBestRoute(List<StopVO> stops, String vehicleId ){
     Vehicle vehicle = vehicleRepository.findOne( vehicleId );
     if(vehicle == null) throw new VehicleDoesNotExistException();
     JsonNode jsonNode = callGoogleService(vehicle, stops);
-    List<Stop> orderedStops = orderStops(jsonNode, stops);
+    List<StopVO> orderedStops = orderStops(jsonNode, stops);
     List<Coordinate> path = readPathFromJson(jsonNode);
     Route route = routeRepository.save(new Route(vehicleId, orderedStops, path));
     saveStops( route );
@@ -47,9 +48,10 @@ public class RoutesService  {
   }
 
   public void saveStops(Route route ){
-    for (Stop s : route.getStops() ){
-      s.setRouteId( route.getId() );
-      stopRepository.save(s);
+    for (StopVO s : route.getStops() ){
+      Stop stop = new Stop( s );
+      stop.setRouteId(route.getId());
+      stopRepository.save(stop);
     }
   }
 
@@ -66,7 +68,7 @@ public class RoutesService  {
     return positions;
   }
 
-  protected JsonNode callGoogleService(Vehicle vehicle , List<Stop> stops ){
+  protected JsonNode callGoogleService(Vehicle vehicle , List<StopVO> stops ){
     String uri = mountApiUri( vehicle , stops );
     JsonNode result = new RestTemplate().getForObject( uri , JsonNode.class);
     return validateResultAndReturn(result);
@@ -80,21 +82,21 @@ public class RoutesService  {
     return result.get("routes").get(0);
   }
 
-  protected String mountApiUri(Vehicle vehicle , List<Stop> stops ){
+  protected String mountApiUri(Vehicle vehicle , List<StopVO> stops ){
     String uri = googleDirections;
     uri += "?key="  + googleApiKey;
     uri += "&origin="  + vehicle.getLatLng();
     uri += "&destination="  + vehicle.getLatLng();
     String waipoints = "optimize:true";
-    for (Stop stop : stops) {
-      waipoints += "|" + stop.getLatLng();
+    for (StopVO stop : stops) {
+      waipoints += "|" + stop.getPosition().getLatLng();
     }
     uri += "&waypoints="+ waipoints;
     return uri;
   }
 
-  protected List<Stop> orderStops(JsonNode routeNode, List<Stop> stops) {
-    final List<Stop> orderedStops = new ArrayList<>();
+  protected List<StopVO> orderStops(JsonNode routeNode, List<StopVO> stops) {
+    final List<StopVO> orderedStops = new ArrayList<>();
     if( !routeNode.has("waypoint_order") ) throw new NoWayPointOrderException();
     for (JsonNode n : routeNode.get("waypoint_order")) {
       orderedStops.add(stops.get(n.asInt()));

@@ -16,18 +16,15 @@ public class Occurrence {
 
   @Id
   private String id;
+
   private OccurrenceType type;
   @Indexed
   private Date logDate;
-
   @Indexed
   private String vehicleId;
-
   private Position vehiclePosition;
-
   @Indexed
   private String routeId;
-
   private String message;
 
   public Occurrence() {

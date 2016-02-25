@@ -1,5 +1,6 @@
 package br.com.trix.config;
 
+import br.com.trix.models.converters.PointWriteConverter;
 import br.com.trix.models.converters.PositionReadConverter;
 import br.com.trix.models.converters.PositionWriteConverter;
 import com.mongodb.*;
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by efraimgentil<efraimgentil@gmail.com> on 18/02/16.
  */
 @Configuration
-@EnableMongoRepositories(basePackages = { "br.com.trix.repositories" })
+@EnableMongoRepositories(basePackages = { "br.com.trix.repositories" , "br.com.trix.models"})
 public class SpringDataMongoConfig extends AbstractMongoConfiguration{
 
   public static final String MONGO_DB = "mongo-database-name";
@@ -45,6 +46,7 @@ public class SpringDataMongoConfig extends AbstractMongoConfiguration{
     List<Converter<?, ?>> converters = new ArrayList<>();
     converters.add( new PositionWriteConverter() );
     converters.add( new PositionReadConverter() );
+    converters.add( new PointWriteConverter() );
     return new CustomConversions(converters);
   }
 

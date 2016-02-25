@@ -1,8 +1,10 @@
 package br.com.trix.events.services;
 
+import br.com.trix.events.models.Occurrence;
 import br.com.trix.events.models.vo.EventRequest;
 import br.com.trix.events.services.exceptions.EventWithoutPositionException;
 import br.com.trix.models.Vehicle;
+import br.com.trix.repositories.OccurrenceRepository;
 import br.com.trix.repositories.VehicleRepository;
 import br.com.trix.services.exceptions.VehicleDoesNotExistException;
 import com.codahale.metrics.annotation.Timed;
@@ -16,6 +18,7 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,12 +48,15 @@ public class EventService {
   @ManagedOperationParameters( {
        @ManagedOperationParameter(name = "eventRequest", description = "The requisition of a event checking"),
   })
-  public void checkEventOccurrence( EventRequest eventRequest ){
+  public List<Occurrence> checkEventOccurrence( EventRequest eventRequest ){
     Vehicle vehicle = vehicleRepository.findOne( eventRequest.getVehicleId()  );
     validateEventRequest(eventRequest , vehicle );
+    List<Occurrence> occurrences = new ArrayList<>();
     for (EventChecker checker : checkers){
-      checker.check( vehicle , eventRequest.getPosition()  );
+      Occurrence o = checker.check(vehicle, eventRequest.getPosition());
+      if(o != null) occurrences.add( o );
     }
+    return occurrences;
   }
 
   protected void validateEventRequest(EventRequest eventRequest, Vehicle vehicle ){

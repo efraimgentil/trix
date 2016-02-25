@@ -40,11 +40,12 @@ public class OutOfRouteEventChecker implements EventChecker {
   private final double acceptableRange = 0.5; //
 
   @Override
-  public void check(Vehicle vehicle, Position position) {
-    GeoResults<Route> routes = routeRepository.findRouteNearPosition(vehicle, position, acceptableRange);;
+  public Occurrence check(Vehicle vehicle, Position position) {
+    GeoResults<Route> routes = routeRepository.findRouteNearPosition(vehicle, position, acceptableRange);
     if(routes.getContent().isEmpty()){
-      occurrenceRepository.save( mountOccurrence(vehicle, position) );
+      return occurrenceRepository.save( mountOccurrence(vehicle, position) );
     }
+    return null;
   }
 
   protected Occurrence mountOccurrence(Vehicle vehicle, Position position){

@@ -7,11 +7,8 @@ import br.com.trix.models.vo.GenerateRoute;
 import br.com.trix.repositories.RouteRepository;
 import br.com.trix.services.RoutesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

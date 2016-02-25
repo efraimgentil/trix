@@ -1,5 +1,6 @@
 package br.com.trix.models;
 
+import br.com.trix.models.vo.StopVO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
@@ -20,13 +21,13 @@ public class Route {
   private Date routeDate;
   @Indexed
   private String vehicleId;
-  private List<Stop> stops;
+  private List<StopVO> stops;
   private List<Coordinate> path;
 
   public Route() {
   }
 
-  public Route(String vehicleId, List<Stop> stops, List<Coordinate> path) {
+  public Route(String vehicleId, List<StopVO> stops, List<Coordinate> path) {
     this.name = "Route random name " + System.nanoTime();
     this.routeDate = new Date();
     this.vehicleId = vehicleId;
@@ -65,10 +66,10 @@ public class Route {
   public void setVehicleId(String vehicleId) {
     this.vehicleId = vehicleId;
   }
-  public List<Stop> getStops() {
+  public List<StopVO> getStops() {
     return stops;
   }
-  public void setStops(List<Stop> stops) {
+  public void setStops(List<StopVO> stops) {
     this.stops = stops;
   }
   public List<Coordinate> getPath() {
