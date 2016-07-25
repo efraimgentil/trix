@@ -59,7 +59,7 @@ public class EventService {
     return occurrences;
   }
 
-  protected void validateEventRequest(EventRequest eventRequest, Vehicle vehicle ){
+  protected void validateEventRequest (EventRequest eventRequest, Vehicle vehicle ){
     if(vehicle == null) throw new VehicleDoesNotExistException();
     if(eventRequest.getPosition() == null ) throw new EventWithoutPositionException();
   }

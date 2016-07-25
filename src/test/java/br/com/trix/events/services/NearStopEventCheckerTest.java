@@ -90,5 +90,6 @@ public class NearStopEventCheckerTest {
     verify( mockedOccurrenceRepository , times(1) ).save( any(Occurrence.class) );
   }
 
+
 }
 

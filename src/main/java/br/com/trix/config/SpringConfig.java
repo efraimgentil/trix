@@ -17,7 +17,11 @@ public class SpringConfig {
   @Bean
   @Qualifier(SpringConfig.GOOGLE_KEY)
   public String getGoogleApiKey(){
-    return "AIzaSyDS-yhi_2dNq2N75F6PIwEifqbTXmY0VsY";
+    String google_direction_key = System.getenv("GOOGLE_DIRECTION_KEY");
+    if(google_direction_key == null) {
+      throw new InvalidStateException("You didn't set the google direction key as the environment variable name GOOGLE_DIRECTION_KEY");
+    }
+    return  google_direction_key;
   }
 
   @Bean
